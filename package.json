@@ -1,0 +1,26 @@
+{
+  "name": "damp",
+  "version": "0.1.0",
+  "description": "A MAMP-like development environment powered by Docker",
+  "keywords": [
+    "development",
+    "environment",
+    "docker"
+  ],
+  "author": "Gilbert Pellegrom",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gilbitron/damp.git"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "damp": "damp.js"
+  },
+  "dependencies": {
+    "chalk": "~1.1.1",
+    "commander": "~2.8.1",
+    "shelljs": "^0.5.3",
+    "yamljs": "^0.2.4"
+  }
+}
