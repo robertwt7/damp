@@ -4,35 +4,8 @@ proxy:
     - "80:80"
   volumes:
     - /var/run/docker.sock:/tmp/docker.sock:ro
-
-wp1:
-  image: wordpress
-  volumes:
-    - ~/damp/wp1:/var/www/html
-  links:
-    - database:mysql
   environment:
-    - WORDPRESS_DB_NAME=wp1
-    - WORDPRESS_DB_PASSWORD=password
-    - VIRTUAL_HOST=wp1.damp.dev
-
-wp2:
-  image: wordpress
-  volumes:
-    - ~/damp/wp2:/var/www/html
-  links:
-    - database:mysql
-  environment:
-    - WORDPRESS_DB_NAME=wp2
-    - WORDPRESS_DB_PASSWORD=password
-    - VIRTUAL_HOST=wp2.damp.dev
-
-static1:
-  image: httpd
-  volumes:
-    - ~/damp/static1:/usr/local/apache2/htdocs
-  environment:
-    - VIRTUAL_HOST=static1.damp.dev
+    - DEFAULT_HOST=damp.dev
 
 database:
   image: mysql:5.7
@@ -47,3 +20,34 @@ phpmyadmin:
     - MYSQL_USERNAME=root
     - MYSQL_ROOT_PASSWORD=password
     - VIRTUAL_HOST=phpmyadmin.damp.dev
+
+damp:
+  image: httpd
+  volumes:
+    - ~/damp/damp:/usr/local/apache2/htdocs
+  environment:
+    - VIRTUAL_HOST=damp.dev
+
+# DON'T EDIT BELOW THIS LINE
+
+#wp1:
+#  image: wordpress
+#  volumes:
+#    - ~/damp/wp1:/var/www/html
+#  links:
+#    - database:mysql
+#  environment:
+#    - WORDPRESS_DB_NAME=wp1
+#    - WORDPRESS_DB_PASSWORD=password
+#    - VIRTUAL_HOST=wp1.damp.dev
+#
+#wp2:
+#  image: wordpress
+#  volumes:
+#    - ~/damp/wp2:/var/www/html
+#  links:
+#    - database:mysql
+#  environment:
+#    - WORDPRESS_DB_NAME=wp2
+#    - WORDPRESS_DB_PASSWORD=password
+#    - VIRTUAL_HOST=wp2.damp.dev
