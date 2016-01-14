@@ -3,41 +3,47 @@
 var path = require('path'),
 	pkg = require(path.join(__dirname, 'package.json')),
 	chalk = require('chalk'),
-	program = require('commander');
+	program = require('commander'),
+	damp = require('./lib/damp.js');
 
-var damp = {
-	path: __dirname,
-	exitWithError: function(error) {
-		console.log(chalk.red('Error: ' + error));
-		exit(1);
-	},
-	hasDependencies: function() {
-		if (!which('docker')) {
-			this.exitWithError('DAMP dependency missing: docker');
-		}
-		if (!which('docker-compose')) {
-			this.exitWithError('DAMP dependency missing: docker-compose');
-		}
-	}
-};
+damp.path = __dirname;
 
-var commandDockerCompose = require('./commands/docker-compose.js')(damp);
+var commandDockerCompose = require('./commands/docker-compose.js')(damp),
+	commandUp = require('./commands/up.js')(damp),
+	commandDestroy = require('./commands/destroy.js')(damp);
 
 program
 	.version(pkg.version);
 
 program
 	.command('up')
-	.description('Run DAMP')
+	.description('Create the DAMP docker machine and run the containers')
+	.action(commandUp);
+
+program
+	.command('destroy')
+	.description('Destory the DAMP docker machine')
+	.action(commandDestroy);
+
+program
+	.command('start')
+	.description('start DAMP docker containers')
 	.action(function(cmd, options){
-		commandDockerCompose('up -d');
+		commandDockerCompose('start');
 	});
 
 program
 	.command('stop')
-	.description('Stop DAMP')
+	.description('stop DAMP docker containers')
 	.action(function(cmd, options){
 		commandDockerCompose('stop');
+	});
+
+program
+	.command('restart')
+	.description('restart DAMP docker containers')
+	.action(function(cmd, options){
+		commandDockerCompose('restart');
 	});
 
 program.parse(process.argv);
