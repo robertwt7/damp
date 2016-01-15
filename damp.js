@@ -19,6 +19,7 @@ program
 program
 	.command('up')
 	.description('Create the DAMP docker machine and run the containers')
+	.option('-d, --driver [driver]', 'Which driver to use for docker machine')
 	.action(commandUp);
 
 program
@@ -36,21 +37,21 @@ program
 program
 	.command('start')
 	.description('start DAMP docker containers')
-	.action(function(cmd, options){
+	.action(function(){
 		commandDockerCompose('start');
 	});
 
 program
 	.command('stop')
 	.description('stop DAMP docker containers')
-	.action(function(cmd, options){
+	.action(function(){
 		commandDockerCompose('stop');
 	});
 
 program
 	.command('restart')
 	.description('restart DAMP docker containers')
-	.action(function(cmd, options){
+	.action(function(){
 		commandDockerCompose('restart');
 	});
 
