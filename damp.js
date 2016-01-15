@@ -9,6 +9,7 @@ var path = require('path'),
 damp.path = __dirname;
 
 var commandDockerCompose = require('./commands/docker-compose.js')(damp),
+	commandDockerMachine = require('./commands/docker-machine.js')(damp),
 	commandUp = require('./commands/up.js')(damp),
 	commandDestroy = require('./commands/destroy.js')(damp);
 
@@ -19,6 +20,13 @@ program
 	.command('up')
 	.description('Create the DAMP docker machine and run the containers')
 	.action(commandUp);
+
+program
+	.command('halt')
+	.description('Stop the DAMP docker machine')
+	.action(function(){
+		commandDockerMachine('stop damp');
+	});
 
 program
 	.command('destroy')
