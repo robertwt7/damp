@@ -20,7 +20,7 @@
   "dependencies": {
     "chalk": "~1.1.1",
     "commander": "~2.8.1",
-    "hostile": "^1.0.2",
+    "inquirer": "^0.11.2",
     "shelljs": "^0.5.3",
     "yamljs": "^0.2.4"
   }
