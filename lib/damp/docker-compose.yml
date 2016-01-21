@@ -1,55 +1,17 @@
 proxy:
-  image: jwilder/nginx-proxy
-  ports:
-    - "80:80"
-  volumes:
-    - /var/run/docker.sock:/tmp/docker.sock:ro
-  environment:
-    - DEFAULT_HOST=damp.dev
-
+    image: jwilder/nginx-proxy
+    ports: ['80:80']
+    volumes: ['/var/run/docker.sock:/tmp/docker.sock:ro']
+    environment: [DEFAULT_HOST=damp.dev]
 database:
-  image: mysql:5.7
-  ports:
-      - "3306:3306"
-  environment:
-    - MYSQL_ROOT_PASSWORD=password
-
+    image: 'mysql:5.7'
+    ports: ['3306:3306']
+    environment: [MYSQL_ROOT_PASSWORD=password]
 phpmyadmin:
-  image: corbinu/docker-phpmyadmin
-  links:
-    - database:mysql
-  environment:
-    - MYSQL_USERNAME=root
-    - MYSQL_ROOT_PASSWORD=password
-    - VIRTUAL_HOST=phpmyadmin.damp.dev
-
+    image: corbinu/docker-phpmyadmin
+    links: ['database:mysql']
+    environment: [MYSQL_USERNAME=root, MYSQL_ROOT_PASSWORD=password, VIRTUAL_HOST=phpmyadmin.damp.dev]
 damp:
-  image: httpd
-  volumes:
-    - ~/damp/damp:/usr/local/apache2/htdocs
-  environment:
-    - VIRTUAL_HOST=damp.dev
-
-# DON'T EDIT BELOW THIS LINE
-
-#wp1:
-#  image: wordpress
-#  volumes:
-#    - ~/damp/wp1:/var/www/html
-#  links:
-#    - database:mysql
-#  environment:
-#    - WORDPRESS_DB_NAME=wp1
-#    - WORDPRESS_DB_PASSWORD=password
-#    - VIRTUAL_HOST=wp1.damp.dev
-#
-#wp2:
-#  image: wordpress
-#  volumes:
-#    - ~/damp/wp2:/var/www/html
-#  links:
-#    - database:mysql
-#  environment:
-#    - WORDPRESS_DB_NAME=wp2
-#    - WORDPRESS_DB_PASSWORD=password
-#    - VIRTUAL_HOST=wp2.damp.dev
+    image: httpd
+    volumes: ['~/damp/damp:/usr/local/apache2/htdocs']
+    environment: [VIRTUAL_HOST=damp.dev]
