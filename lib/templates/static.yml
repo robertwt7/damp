@@ -1,0 +1,6 @@
+{name}:
+  image: httpd
+  volumes:
+    - ~/damp/{name}:/usr/local/apache2/htdocs
+  environment:
+    - VIRTUAL_HOST={name}.damp.dev

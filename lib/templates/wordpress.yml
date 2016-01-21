@@ -1,0 +1,10 @@
+{name}:
+  image: wordpress
+  volumes:
+    - ~/damp/{name}:/var/www/html
+  links:
+    - database:mysql
+  environment:
+    - WORDPRESS_DB_NAME={name}
+    - WORDPRESS_DB_PASSWORD=password
+    - VIRTUAL_HOST={name}.damp.dev
