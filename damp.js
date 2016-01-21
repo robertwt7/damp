@@ -2,7 +2,6 @@
 
 var path = require('path'),
 	pkg = require(path.join(__dirname, 'package.json')),
-	chalk = require('chalk'),
 	program = require('commander'),
 	damp = require('./lib/damp.js');
 
@@ -10,8 +9,7 @@ damp.path = __dirname;
 
 var commandDockerCompose = require('./commands/docker-compose.js')(damp),
 	commandDockerMachine = require('./commands/docker-machine.js')(damp),
-	commandUp = require('./commands/up.js')(damp),
-	commandDestroy = require('./commands/destroy.js')(damp);
+	commandUp = require('./commands/up.js')(damp);
 
 program
 	.version(pkg.version);
@@ -25,35 +23,50 @@ program
 program
 	.command('halt')
 	.description('Stop the DAMP docker machine')
-	.action(function(){
+	.action(function() {
 		commandDockerMachine('stop damp');
 	});
 
 program
+	.command('status')
+	.description('Show the status of the DAMP docker machine')
+	.action(require('./commands/status.js')(damp));
+
+program
 	.command('destroy')
-	.description('Destory the DAMP docker machine')
-	.action(commandDestroy);
+	.description('Destroy the DAMP docker machine')
+	.action(require('./commands/destroy.js')(damp));
 
 program
 	.command('start')
-	.description('start DAMP docker containers')
-	.action(function(){
+	.description('Start DAMP docker containers')
+	.action(function() {
 		commandDockerCompose('start');
 	});
 
 program
 	.command('stop')
-	.description('stop DAMP docker containers')
-	.action(function(){
+	.description('Stop DAMP docker containers')
+	.action(function() {
 		commandDockerCompose('stop');
 	});
 
 program
 	.command('restart')
-	.description('restart DAMP docker containers')
-	.action(function(){
+	.description('Restart DAMP docker containers')
+	.action(function() {
 		commandDockerCompose('restart');
 	});
+
+program
+	.command('create-site')
+	.description('Create a new site')
+	.action(require('./commands/site/create.js')(damp, commandUp));
+
+program
+	.command('remove-site')
+	.description('Remove a site')
+	.action(require('./commands/site/remove.js')(damp));
 
 program.parse(process.argv);
 
