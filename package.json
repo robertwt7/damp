@@ -1,5 +1,5 @@
 {
-  "name": "damp",
+  "name": "damp-cli",
   "version": "0.1.0",
   "description": "A MAMP-like development environment powered by Docker",
   "keywords": [
